@@ -1,0 +1,22 @@
+{
+  "name": "playground-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dickerpulli/playground-nodejs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dickerpulli/playground-nodejs/issues"
+  },
+  "homepage": "https://github.com/dickerpulli/playground-nodejs#readme",
+  "dependencies": {
+    "mongodb": "^2.2.25"
+  }
+}
