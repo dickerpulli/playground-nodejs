@@ -1,29 +1,28 @@
 'use strict'
 
-const MongoClient = require('mongodb');
-const assert = require('assert');
+var fs = require('fs');
+var parser = require('csv-parser');
 
+var csvData={};
+fs.createReadStream(__dirname + '/haushaltsbuch.csv')
+    .pipe(parser({separator: ';'}))
+    .on('data', function(csvrow) {
+        var key = csvrow.Oberkategorie + '#' + csvrow.Unterkategorie;
+        var value = 0;
+        if (new Date(csvrow.Datum) >= new Date('01.01.2016')) {
+          if (csvData[key]) {
+            value = csvData[key];
+          }
+          value += parseFloat(csvrow.Betrag.replace(',', '.'));
+          csvData[key] = value;         
+        }
+    })
+    .on('end', function() {
+      console.log(csvData);
+      var line = '';
+      for (var index in csvData) {
+        line += index + ';' + csvData[index] + '\n';
+      }
+      console.log(line);
+    });
 
-// docker run -d -p 27017:27017 --name some-mongo mongo --auth
-// docker exec -it some-mongo mongo admin
-// db.createUser({ user: 'jsmith', pwd: 'some-initial-password', roles: [ { role: "root", db: "admin" } ] });
-
-const url = 'mongodb://jsmith:some-initial-password@localhost:27017/admin';
-
-MongoClient.connect(url, function(err, db) {
-  assert.equal(null, err);
-  console.log("Connected correctly to server");
-  
-  const users = db.collection('users');
-  
-  users.insert({
-    firstname: 'John',
-    lastname: 'Doe'
-  });
-  
-  users.find().toArray((err, documents) => {
-    console.log(documents);
-  });
-  
-  db.close();
-});

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/dickerpulli/playground-nodejs#readme",
   "dependencies": {
+    "csv-parser": "^1.11.0",
     "mongodb": "^2.2.25"
   }
 }
